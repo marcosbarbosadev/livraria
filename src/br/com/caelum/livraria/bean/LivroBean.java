@@ -71,5 +71,9 @@ public class LivroBean {
 		}
 		
 	}
+	
+	public String formAutor() {
+		return "autor?faces-redirect=true";
+	}
 
 }
