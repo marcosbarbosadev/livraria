@@ -1,12 +1,13 @@
 <ui:composition template="_template.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
 	
 	<ui:define name="titulo">Novo Autor</ui:define>
 	
 	<ui:define name="conteudo">
-		<h:form>
+		<h:form id="frmAutor">
 			<fieldset>
 				<legend>Dados do Autor</legend>
 				<h:panelGrid columns="2">
@@ -15,8 +16,24 @@
 					<h:commandButton value="Gravar" action="#{autorBean.gravar}" />
 				</h:panelGrid>
 			</fieldset>
+			
+			<h:dataTable value="#{autorBean.autores}" var="autor">
+				<h:column>
+					<f:facet name="headerr">Autor</f:facet>
+					<h:outputText value="#{autor.nome}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Ações</f:facet>
+					<h:commandLink value="Editar" action="#{autorBean.editar(autor)}" /> | 
+					<h:commandLink value="Remover" action="#{autorBean.excluir(autor)}" />
+				</h:column>
+			</h:dataTable>
+
+			<h:commandLink value="Cadastrar Livro" action="livro?faces-redirect=true" immediate="true" />
+			
 		</h:form>
 	</ui:define>
+	
 	
 	<ui:define name="rodape">Novo Autor</ui:define>
 	

@@ -12,6 +12,7 @@ import javax.faces.validator.ValidatorException;
 import br.com.caelum.livraria.dao.DAO;
 import br.com.caelum.livraria.modelo.Autor;
 import br.com.caelum.livraria.modelo.Livro;
+import br.com.caelum.livraria.util.RedirectView;
 
 @ManagedBean
 @ViewScoped
@@ -37,14 +38,18 @@ public class LivroBean {
 	}
 	
 	public void gravar() {
-		System.out.println("Gravando livro " + this.livro.getTitulo());
 
 		if (livro.getAutores().isEmpty()) {
 			FacesContext.getCurrentInstance().addMessage("autor", new FacesMessage("Livro deve ter pelo menos um Autor."));
 			return;
 		}
 
-		new DAO<Livro>(Livro.class).adiciona(this.livro);
+		if(this.livro.getId() == null) {
+			new DAO<Livro>(Livro.class).adiciona(this.livro);
+		} else {
+			new DAO<Livro>(Livro.class).atualiza(this.livro);
+		}
+		
 		
 		this.livro = new Livro();
 	}
@@ -75,5 +80,19 @@ public class LivroBean {
 	public String formAutor() {
 		return "autor?faces-redirect=true";
 	}
-
+	
+	public RedirectView excluir(Livro livro) {
+		new DAO<Livro>(Livro.class).remove(livro);
+		FacesContext.getCurrentInstance().addMessage("frmLivro", new FacesMessage("Livro excluído com sucesso!"));
+		return new RedirectView("livro");
+	}
+	
+	public void editar(Livro livro) {
+		this.livro = livro;
+	}
+	
+	public void removerAutor(Autor autor) {
+		this.livro.removerAutor(autor);
+	}
+	
 }
