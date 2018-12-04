@@ -98,7 +98,9 @@
 					<f:facet name="header">
 						<h:outputText>Ações</h:outputText>
 					</f:facet>
-					<h:commandLink value="Editar" action="#{livroBean.editar(livro)}" /> | 
+					<h:commandLink value="Editar">
+						<f:setPropertyActionListener value="#{livro}" target="#{livroBean.livro}" />
+					</h:commandLink> | 
 					<h:commandLink value="Excluir" action="#{livroBean.excluir(livro)}" />
 				</h:column>
 			</h:dataTable>

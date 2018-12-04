@@ -18,10 +18,13 @@ public class AutorBean {
 	private Autor autor = new Autor();
 
 	public Autor getAutor() {
-		System.out.println("autorId: " + autor.getId());
 		return autor;
 	}
 
+	public void setAutor(Autor autor) {
+		this.autor = autor;
+	}
+	
 	public RedirectView gravar() {
 		
 		System.out.println("autorId: " + autor.getId());
@@ -39,10 +42,6 @@ public class AutorBean {
 	
 	public List<Autor> getAutores() {
 		return new DAO<Autor>(Autor.class).listaTodos();
-	}
-	
-	public void editar(Autor autor) {
-		this.autor = autor;
 	}
 	
 	public RedirectView excluir(Autor autor) {

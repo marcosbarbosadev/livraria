@@ -33,6 +33,10 @@ public class LivroBean {
 		return livro;
 	}
 
+	public void setLivro(Livro livro) {
+		this.livro = livro;
+	}
+	
 	public List<Autor> getAutores() {
 		return new DAO<Autor>(Autor.class).listaTodos();
 	}
@@ -85,10 +89,6 @@ public class LivroBean {
 		new DAO<Livro>(Livro.class).remove(livro);
 		FacesContext.getCurrentInstance().addMessage("frmLivro", new FacesMessage("Livro excluído com sucesso!"));
 		return new RedirectView("livro");
-	}
-	
-	public void editar(Livro livro) {
-		this.livro = livro;
 	}
 	
 	public void removerAutor(Autor autor) {
