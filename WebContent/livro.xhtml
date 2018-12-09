@@ -63,7 +63,9 @@
 						</h:column>
 						<h:column>
 							<f:facet name="header">Remover</f:facet>
-							<h:commandLink value="Remover" action="#{livroBean.removerAutor(autor)}" />
+							<h:commandLink value="Remover" id="btn-remover-autor" action="#{livroBean.removerAutor(autor)}">
+								<f:ajax execute="btn-remover-autor" render=":frmLivro:autoresPanel" />
+							</h:commandLink>
 						</h:column>
 					</h:dataTable>
 				</h:panelGroup>

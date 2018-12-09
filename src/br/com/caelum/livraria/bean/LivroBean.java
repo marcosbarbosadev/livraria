@@ -95,4 +95,9 @@ public class LivroBean {
 		this.livro.removerAutor(autor);
 	}
 	
+	public void removerAutorFila() {
+		Autor ultimoAutor = this.livro.getAutores().get(this.livro.getAutores().size() - 1);
+		this.livro.removerAutor(ultimoAutor);
+	}
+	
 }
