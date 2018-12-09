@@ -18,17 +18,8 @@ import br.com.caelum.livraria.util.RedirectView;
 @ViewScoped
 public class LivroBean {
 
-	private Integer autorId;
 	private Livro livro = new Livro();
 
-	public Integer getAutorId() {
-		return autorId;
-	}
-	
-	public void setAutorId(Integer autorId) {
-		this.autorId = autorId;
-	}
-	
 	public Livro getLivro() {
 		return livro;
 	}
