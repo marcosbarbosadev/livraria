@@ -6,10 +6,6 @@
 	
 	<ui:define name="titulo">Novo Livro</ui:define>
 	
-		<f:metadata>
-		    <f:viewParam name="autorId" value="#{autorBean.autor.id}"/>
-		</f:metadata>	
-	
 	<ui:define name="conteudo">
 		<h:form id="frmLivro">
 		
@@ -52,23 +48,25 @@
 						itemLabel="#{autor.nome}" itemValue="#{autor.id}" />
 				</h:selectOneMenu>
 				<h:commandButton value="Gravar Autor" action="#{livroBean.gravarAutor}">
-					<f:ajax execute="autor" render="autores" />
+					<f:ajax execute="autor" render="autoresPanel" />
 				</h:commandButton>
 				
 				<br />
 				
 				<h:commandLink value="Cadastrar Novo Autor" action="#{livroBean.formAutor}" immediate="true" />
 				
-				<h:dataTable value="#{livroBean.autoresDoLivro}" var="autor" id="autores" rendered="#{not empty livroBean.autoresDoLivro}">
-					<h:column>
-						<f:facet name="header">Autor</f:facet>
-						<h:outputText value="#{autor.nome}" />
-					</h:column>
-					<h:column>
-						<f:facet name="header">Remover</f:facet>
-						<h:commandLink value="Remover" action="#{livroBean.removerAutor(autor)}" />
-					</h:column>
-				</h:dataTable>
+				<h:panelGroup id="autoresPanel">
+					<h:dataTable value="#{livroBean.autoresDoLivro}" var="autor" id="autores" rendered="#{not empty livroBean.autoresDoLivro}">
+						<h:column>
+							<f:facet name="header">Autor</f:facet>
+							<h:outputText value="#{autor.nome}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Remover</f:facet>
+							<h:commandLink value="Remover" action="#{livroBean.removerAutor(autor)}" />
+						</h:column>
+					</h:dataTable>
+				</h:panelGroup>
 				
 			</fieldset>
 	
@@ -79,6 +77,7 @@
 		</h:form>
 			
 		<h:form id="frmListaLivros">
+		
 			<h:dataTable value="#{livroBean.listaLivros}" var="livro" id="listagemLivros">
 				<h:column>
 					<f:facet name="header">Título</f:facet>
