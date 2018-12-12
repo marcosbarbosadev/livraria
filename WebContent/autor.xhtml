@@ -13,14 +13,22 @@
 				<h:panelGrid columns="2">
 					<h:outputLabel value="Nome:" for="nome" />
 					<h:inputText id="nome" value="#{autorBean.autor.nome}" />
+					<h:outputLabel value="E-mail:" for="email" />
+					<h:inputText id="email" value="#{autorBean.autor.email}">
+						<f:passThroughAttribute name="type" value="email" />
+					</h:inputText>
 					<h:commandButton value="Gravar" action="#{autorBean.gravar}" />
 				</h:panelGrid>
 			</fieldset>
 			
 			<h:dataTable value="#{autorBean.autores}" var="autor">
 				<h:column>
-					<f:facet name="headerr">Autor</f:facet>
+					<f:facet name="header">Autor</f:facet>
 					<h:outputText value="#{autor.nome}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">E-mail</f:facet>
+					<h:outputText value="#{autor.email}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">Ações</f:facet>
