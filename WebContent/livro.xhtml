@@ -7,6 +7,12 @@
 	<ui:define name="titulo">Novo Livro</ui:define>
 	
 	<ui:define name="conteudo">
+		
+		<f:metadata>
+			<f:viewParam name="livroId" value="#{livroBean.livroId}" required="false" />
+			<f:viewAction action="#{livroBean.carregarLivroPorId}" if="#{param['livroId'] != null}" />
+		</f:metadata>
+	
 		<h:form id="frmLivro">
 		
 			<h:messages id="messages" />
