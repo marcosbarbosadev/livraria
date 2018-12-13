@@ -30,4 +30,10 @@ public class LoginBean {
 		return null;
 		
 	}
+	
+	public String deslogar() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getSessionMap().remove("usuarioLogado");
+		return "login?faces-redirect=true";
+	}
 }
