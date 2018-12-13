@@ -9,6 +9,9 @@
       	<div id="cabecalho">
       		<h:graphicImage library="img" name="logo.png" />
       		<h1><ui:insert name="titulo" /></h1>
+      		<h:outputText value="Usuário logado: " />
+      		<h:outputText value="#{sessionScope['usuarioLogado'].email}" />
+      		<br /><br />
       	</div>
       	
       	<div id="conteudo">
