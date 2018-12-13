@@ -1,5 +1,6 @@
 package br.com.caelum.livraria.bean;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -20,14 +21,17 @@ public class LoginBean {
 	public String efetuaLogin() {
 		
 		boolean existe = new UsuarioDAO().existe(usuario);
+		FacesContext context = FacesContext.getCurrentInstance();
 
 		if(existe) {
-			FacesContext context = FacesContext.getCurrentInstance();
 			context.getExternalContext().getSessionMap().put("usuarioLogado", usuario);
 			return "livro?faces-redirect=true";
 		}
 		
-		return null;
+		context.getExternalContext().getFlash().setKeepMessages(true);
+		context.addMessage(null, new FacesMessage("Usuário não encontrado"));
+		
+		return "login?faces-redirect=true";
 		
 	}
 	

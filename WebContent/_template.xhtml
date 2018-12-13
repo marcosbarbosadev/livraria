@@ -9,11 +9,11 @@
       	<div id="cabecalho">
       		<h:graphicImage library="img" name="logo.png" />
       		<h1><ui:insert name="titulo" /></h1>
-      		<h:outputText value="Usuário logado: " />
-      		<h:outputText value="#{usuarioLogado.email}" /><!-- Também pode ser acessando usando #{sessionScope['usuarioLogado'].email} -->
       		
       		<h:form rendered="#{usuarioLogado != null}">
-      			<h:commandLink value="Logout" action="#{loginBean.deslogar}" />
+	      		<h:outputText value="Usuário logado: " />
+	      		<h:outputText value="#{usuarioLogado.email}" /><!-- Também pode ser acessando usando #{sessionScope['usuarioLogado'].email} -->
+      			 | <h:commandLink value="Logout" action="#{loginBean.deslogar}" />
       		</h:form>
       		
       		<br /><br />
