@@ -77,7 +77,7 @@
 		</h:form>
 		<br /><br />
 		<h:form id="frmListaLivros">
-			<p:dataTable value="#{livroBean.listaLivros}" var="livro" id="listagemLivros" rows="3" paginator="true">
+			<p:dataTable value="#{livroBean.livroDataModal}" var="livro" id="listagemLivros" rows="5" paginator="true" lazy="true">
 				<f:facet name="header">Livros</f:facet>
 				<!-- MatchModes: startsWith, endsWidth, contains, exact, equals, lte (menos ou igual) e gte (maior ou igual) -->
 				<p:column headerText="Título" sortBy="#{livro.titulo}" filterBy="#{livro.titulo}" filterMatchMode="contains">

@@ -13,6 +13,7 @@ import javax.faces.validator.ValidatorException;
 import br.com.caelum.livraria.dao.DAO;
 import br.com.caelum.livraria.modelo.Autor;
 import br.com.caelum.livraria.modelo.Livro;
+import br.com.caelum.livraria.modelo.LivroDataModal;
 
 @ManagedBean
 @ViewScoped
@@ -22,31 +23,9 @@ public class LivroBean {
 	private Integer livroId;
 	private Livro livro = new Livro();
 	private List<Livro> livros;
+	private LivroDataModal livroDataModal = new LivroDataModal();
 
-	public Integer getAutorId() {
-		return autorId;
-	}
-	
-	public void setAutorId(Integer autorId) {
-		this.autorId = autorId;
-	}
-	
-	public Integer getLivroId() {
-		return livroId;
-	}
-	
-	public void setLivroId(Integer livroId) {
-		this.livroId = livroId;
-	}
-	
-	public Livro getLivro() {
-		return livro;
-	}
 
-	public void setLivro(Livro livro) {
-		this.livro = livro;
-	}
-	
 	public List<Autor> getAutores() {
 		return new DAO<Autor>(Autor.class).listaTodos();
 	}
@@ -149,5 +128,36 @@ public class LivroBean {
 	}	
 	
 	
+	public Integer getAutorId() {
+		return autorId;
+	}
+	
+	public void setAutorId(Integer autorId) {
+		this.autorId = autorId;
+	}
+	
+	public Integer getLivroId() {
+		return livroId;
+	}
+	
+	public void setLivroId(Integer livroId) {
+		this.livroId = livroId;
+	}
+	
+	public Livro getLivro() {
+		return livro;
+	}
+
+	public void setLivro(Livro livro) {
+		this.livro = livro;
+	}	
+	
+	public LivroDataModal getLivroDataModal() {
+		return livroDataModal;
+	}
+	
+	public void setLivroDataModal(LivroDataModal livroDataModal) {
+		this.livroDataModal = livroDataModal;
+	}
 	
 }
