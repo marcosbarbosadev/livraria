@@ -1,6 +1,7 @@
 package br.com.caelum.livraria.bean;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -12,7 +13,6 @@ import javax.faces.validator.ValidatorException;
 import br.com.caelum.livraria.dao.DAO;
 import br.com.caelum.livraria.modelo.Autor;
 import br.com.caelum.livraria.modelo.Livro;
-import br.com.caelum.livraria.util.RedirectView;
 
 @ManagedBean
 @ViewScoped
@@ -21,6 +21,7 @@ public class LivroBean {
 	private Integer autorId;
 	private Integer livroId;
 	private Livro livro = new Livro();
+	private List<Livro> livros;
 
 	public Integer getAutorId() {
 		return autorId;
@@ -67,7 +68,7 @@ public class LivroBean {
 			new DAO<Livro>(Livro.class).atualiza(this.livro);
 		}
 		
-		
+		carregarLivros();
 		this.livro = new Livro();
 	}
 	
@@ -81,8 +82,15 @@ public class LivroBean {
 	}
 	
 	public List<Livro> getListaLivros() {
-		List<Livro> livros = new DAO<Livro>(Livro.class).listaTodos();
+		
+		if(livros == null)
+			carregarLivros();
+		
 		return livros;
+	}
+
+	private void carregarLivros() {
+		livros = new DAO<Livro>(Livro.class).listaTodos();
 	}
 	
 	public void comecaComDigitoUm(FacesContext fc, UIComponent component, Object value) throws ValidatorException {
@@ -98,19 +106,48 @@ public class LivroBean {
 		return "autor?faces-redirect=true";
 	}
 	
-	public RedirectView excluir(Livro livro) {
+	public void excluir(Livro livro) {
 		new DAO<Livro>(Livro.class).remove(livro);
 		FacesContext.getCurrentInstance().addMessage("frmLivro", new FacesMessage("Livro excluído com sucesso!"));
-		return new RedirectView("livro");
+		carregarLivros();
 	}
 	
 	public void removerAutor(Autor autor) {
 		this.livro.removerAutor(autor);
 	}
 	
-	public void removerAutorFila() {
-		Autor ultimoAutor = this.livro.getAutores().get(this.livro.getAutores().size() - 1);
-		this.livro.removerAutor(ultimoAutor);
-	}
+	public boolean precoEhMenor(Object valorColuna, Object filtroDigitado, Locale locale) { // java.util.Locale
+
+        //tirando espaços do filtro
+        String textoDigitado = (filtroDigitado == null) ? null : filtroDigitado.toString().trim();
+
+        System.out.println("Filtrando pelo " + textoDigitado + ", Valor do elemento: " + valorColuna);
+
+        // o filtro é nulo ou vazio?
+        if (textoDigitado == null || textoDigitado.equals("")) {
+            return true;
+        }
+
+        // elemento da tabela é nulo?
+        if (valorColuna == null) {
+            return false;
+        }
+
+        try {
+            // fazendo o parsing do filtro para converter para Double
+            Double precoDigitado = Double.valueOf(textoDigitado);
+            Double precoColuna = (Double) valorColuna;
+
+            // comparando os valores, compareTo devolve um valor negativo se o value é menor do que o filtro
+            return precoColuna.compareTo(precoDigitado) < 0;
+
+        } catch (NumberFormatException e) {
+
+            // usuario nao digitou um numero
+            return false;
+        }
+	}	
+	
+	
 	
 }
