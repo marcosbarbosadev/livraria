@@ -25,9 +25,7 @@ public class AutorBean {
 		this.autor = autor;
 	}
 	
-	public RedirectView gravar() {
-		
-		System.out.println("autorId: " + autor.getId());
+	public void gravar() {
 		
 		if(this.autor.getId() == null) {
 			new DAO<Autor>(Autor.class).adiciona(this.autor);
@@ -37,16 +35,14 @@ public class AutorBean {
 		
 		this.autor = new Autor();
 
-		return new RedirectView("autor");
 	}
 	
 	public List<Autor> getAutores() {
 		return new DAO<Autor>(Autor.class).listaTodos();
 	}
 	
-	public RedirectView excluir(Autor autor) {
+	public void excluir(Autor autor) {
 		new DAO<Autor>(Autor.class).remove(autor);
 		FacesContext.getCurrentInstance().addMessage("frmAutor", new FacesMessage("Autor excluído com sucesso!"));
-		return new RedirectView("autor");
 	}
 }
