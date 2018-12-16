@@ -18,36 +18,39 @@
 	
 		<h:form id="frmLivro">
 		
-			<p:messages id="messages" autoUpdate="true" />
-			
 			<p:fieldset legend="Dados do Livro" id="cadLivro">
-				<p:panelGrid columns="2">
+				<p:panelGrid columns="3">
 					<p:outputLabel value="Titulo:" for="titulo" />
 					<p:inputText id="titulo" value="#{livroBean.livro.titulo}" required="true" 
-						requiredMessage="Título obrigatório!" validatorMessage="Título não pode ser superior a 40!">
+						validatorMessage="Título não pode ser superior a 40!">
 						<f:validateLength maximum="40" />
 						<f:ajax event="blur" render="messages"></f:ajax>
 					</p:inputText>
+					<p:message for="titulo" id="messageTitulo" />
 	
 					<p:outputLabel value="ISBN:" for="isbn" />
 					<p:inputMask id="isbn" value="#{livroBean.livro.isbn}" validator="#{livroBean.comecaComDigitoUm}" mask="999-9-99-999999-9">
 						<f:ajax event="blur" render="messages" />
 					</p:inputMask>
+					<p:message for="isbn" id="messageISBN" />
 	
 					<p:outputLabel value="Preço:" for="preco" />
 					<p:inputText id="preco" value="#{livroBean.livro.preco}" validatorMessage="O preço deve ser entre 1 e 1.000">
 						<f:validateDoubleRange minimum="1.00" maximum="1000.00" />
 					</p:inputText>
+					<p:message for="preco" id="messagePreco" />
 	
 					<p:outputLabel value="Data de Lançamento:" for="dataLancamento" />
 					<p:calendar id="dataLancamento" value="#{livroBean.livro.dataLancamento.time}" pattern="dd/MM/yyyy" mask="true" 
 						timeZone="America/Sao_Paulo" />
+					<p:message for="dataLancamento" id="messageDataLancamento" />
 						
 					<p:outputLabel value="Gênero:" for="genero" />                            
 					<p:selectOneMenu value="#{livroBean.livro.genero}" id="genero">
 					    <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
 					    <f:selectItems value="#{livroBean.generos}" /> 
-					</p:selectOneMenu>						
+					</p:selectOneMenu>
+					<p:message for="genero" id="messageGenero" />		
 	
 				</p:panelGrid>
 			</p:fieldset>
@@ -78,7 +81,7 @@
 				
 			</p:fieldset>
 	
-			<p:commandButton value="Gravar Livro" action="#{livroBean.gravar}" process="@form :frmListaLivros" update="@all" />
+			<p:commandButton value="Gravar Livro" action="#{livroBean.gravar}" process="@form" update="@form :frmListaLivros" />
 	
 		</h:form>
 		<br /><br />

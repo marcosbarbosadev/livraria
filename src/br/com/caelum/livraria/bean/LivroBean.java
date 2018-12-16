@@ -39,7 +39,7 @@ public class LivroBean {
 	public void gravar() {
 
 		if (livro.getAutores().isEmpty()) {
-			FacesContext.getCurrentInstance().addMessage("autor", new FacesMessage("Livro deve ter pelo menos um Autor."));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Livro deve ter pelo menos um Autor."));
 			return;
 		}
 
@@ -49,6 +49,7 @@ public class LivroBean {
 			new DAO<Livro>(Livro.class).atualiza(this.livro);
 		}
 		
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Livro salvo com sucesso."));
 		carregarLivros();
 		this.livro = new Livro();
 	}
@@ -78,7 +79,7 @@ public class LivroBean {
 		String valor = value.toString();
 		
 		if(!valor.startsWith("1")) {
-			throw new ValidatorException(new FacesMessage("Deveria começar com 1"));
+			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deveria começar com 1", null));
 		}
 		
 	}

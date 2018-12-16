@@ -7,39 +7,42 @@
       <h:head />
       
       <h:body>
-      	<div id="cabecalho">
-      		<h:graphicImage library="img" name="logo.png" />
-
-		    <p:growl id="messages" showDetail="true" autoUpdate="true" />
-      		
+	   	<div id="cabecalho">
+	   		<h:graphicImage library="img" name="logo.png" />
+	
+	   		<p:growl id="messages" showDetail="true" autoUpdate="true" />
+	   		
 			<h:form rendered="#{usuarioLogado != null}">
-			 
-			    <p:menuButton value="Options">
-			        <p:menuitem value="Livros" action="livro?faces-redirect=true" update="messages" icon="ui ui-icon-note" ajax="false" />
-			        <p:menuitem value="Autores" action="autor?faces-redirect=true" update="messages" icon="ui ui-icon-person" ajax="false" />
-			        <p:separator />
-			        <p:menuitem value="Logout" action="#{loginBean.deslogar}" icon="ui ui-icon-arrowthick-1-sw" />
-			    </p:menuButton>
+				<p:menubar>
+				    <p:submenu label="Cadastros" icon="ui-icon-document">
+			            <p:menuitem value="Livros" action="livro?faces-redirect=true"  icon="fa fa-fw fa-edit" />
+			               		<p:separator />
+			            <p:menuitem value="Autor" action="autor?faces-redirect=true"  icon="fa fa-fw fa-edit" />
+				    </p:submenu>
+				
+				     <p:submenu label="Outros">
+				        <p:menuitem value="Logout" action="#{loginBean.deslogar}" icon="fa fa-fw fa-sign-out" />
+				    </p:submenu>
+				     <p:submenu label="Primefaces">
+				        <p:menuitem value="ShowCase" target="_blank" url="http://primefaces.org/showcase" icon="fa fa-fw fa-sign-out" />
+				    </p:submenu>
+					<f:facet name="options">
+						<h:outputText value="#{usuarioLogado.email}" />  <!-- Também pode ser acessando usando #{sessionScope['usuarioLogado'].email} -->
+						<p:commandButton value="Logout" action="#{loginBean.deslogar}" icon="fa fa-fw fa-sign-out" />
+					</f:facet>
+				</p:menubar>
 			</h:form>      		
-      		
-      		<h1><ui:insert name="titulo" /></h1>
-      		
-      		<h:form rendered="#{usuarioLogado != null}">
-	      		<h:outputText value="Usuário logado: " />
-	      		<h:outputText value="#{usuarioLogado.email}" /><!-- Também pode ser acessando usando #{sessionScope['usuarioLogado'].email} -->
-      		</h:form>
-      		
-      		<br /><br />
-      	</div>
-      	
-      	<div id="conteudo">
-      		<ui:insert name="conteudo" />
-      	</div>
-      	
-      	
-      	<br /><br />
-      	<div id="rodape">
-      		copyright 2012 - <ui:insert name="rodape" />
-      	</div>
-      </h:body>
+	   		<h1><ui:insert name="titulo" /></h1>
+	   	</div>
+		   	
+	   	<div id="conteudo">
+	   		<ui:insert name="conteudo" />
+	   	</div>
+		   	
+		   	
+	   	<br /><br />
+	   	<div id="rodape">
+	   		copyright 2012 - <ui:insert name="rodape" />
+	   	</div>
+	</h:body>
 </html>
