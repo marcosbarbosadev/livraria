@@ -9,7 +9,6 @@ import javax.faces.context.FacesContext;
 
 import br.com.caelum.livraria.dao.DAO;
 import br.com.caelum.livraria.modelo.Autor;
-import br.com.caelum.livraria.util.RedirectView;
 
 @ManagedBean
 @ViewScoped

@@ -1,19 +1,32 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 
       <h:head />
       
       <h:body>
       	<div id="cabecalho">
       		<h:graphicImage library="img" name="logo.png" />
+
+		    <p:growl id="messages" showDetail="true" autoUpdate="true" />
+      		
+			<h:form rendered="#{usuarioLogado != null}">
+			 
+			    <p:menuButton value="Options">
+			        <p:menuitem value="Livros" action="livro?faces-redirect=true" update="messages" icon="ui ui-icon-note" ajax="false" />
+			        <p:menuitem value="Autores" action="autor?faces-redirect=true" update="messages" icon="ui ui-icon-person" ajax="false" />
+			        <p:separator />
+			        <p:menuitem value="Logout" action="#{loginBean.deslogar}" icon="ui ui-icon-arrowthick-1-sw" />
+			    </p:menuButton>
+			</h:form>      		
+      		
       		<h1><ui:insert name="titulo" /></h1>
       		
       		<h:form rendered="#{usuarioLogado != null}">
 	      		<h:outputText value="Usuário logado: " />
 	      		<h:outputText value="#{usuarioLogado.email}" /><!-- Também pode ser acessando usando #{sessionScope['usuarioLogado'].email} -->
-      			 | <h:commandLink value="Logout" action="#{loginBean.deslogar}" />
       		</h:form>
       		
       		<br /><br />
