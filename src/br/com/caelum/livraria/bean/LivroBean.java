@@ -1,5 +1,6 @@
 package br.com.caelum.livraria.bean;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,6 +25,7 @@ public class LivroBean {
 	private Livro livro = new Livro();
 	private List<Livro> livros;
 	private LivroDataModal livroDataModal = new LivroDataModal();
+	private List<String> generos = Arrays.asList("Romance", "Drama", "Ação");
 
 
 	public List<Autor> getAutores() {
@@ -158,6 +160,10 @@ public class LivroBean {
 	
 	public void setLivroDataModal(LivroDataModal livroDataModal) {
 		this.livroDataModal = livroDataModal;
+	}
+	
+	public List<String> getGeneros() {
+		return generos;
 	}
 	
 }

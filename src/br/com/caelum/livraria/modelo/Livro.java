@@ -22,6 +22,7 @@ public class Livro {
 	private String titulo;
 	private String isbn;
 	private double preco;
+	private String genero;
 	
 	@Temporal(TemporalType.DATE)
 	private Calendar dataLancamento = Calendar.getInstance();
@@ -29,16 +30,16 @@ public class Livro {
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Autor> autores = new ArrayList<Autor>();
 
-	public List<Autor> getAutores() {
-		return autores;
-	}
-
+	public Livro() {}
+	
 	public void adicionaAutor(Autor autor) {
 		this.autores.add(autor);
 	}
 
-	public Livro() {
+	public void removerAutor(Autor autor) {
+		this.autores.remove(autor);
 	}
+
 
 	public Integer getId() {
 		return id;
@@ -72,6 +73,14 @@ public class Livro {
 		this.preco = preco;
 	}
 
+	public String getGenero() {
+		return genero;
+	}
+	
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+	
 	public Calendar getDataLancamento() {
 		return dataLancamento;
 	}
@@ -80,8 +89,8 @@ public class Livro {
 		this.dataLancamento = calendar;
 	}
 	
-	public void removerAutor(Autor autor) {
-		this.autores.remove(autor);
+	public List<Autor> getAutores() {
+		return autores;
 	}
 	
 }
