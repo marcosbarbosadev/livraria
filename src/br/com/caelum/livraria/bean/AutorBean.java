@@ -11,6 +11,7 @@ import javax.inject.Named;
 
 import br.com.caelum.livraria.dao.AutorDao;
 import br.com.caelum.livraria.modelo.Autor;
+import br.com.caelum.livraria.tx.Transacional;
 
 @Named
 @ViewScoped
@@ -31,6 +32,7 @@ public class AutorBean implements Serializable {
 		this.autor = autor;
 	}
 	
+	@Transacional
 	public void gravar() {
 		
 		if(this.autor.getId() == null) {
@@ -47,6 +49,7 @@ public class AutorBean implements Serializable {
 		return dao.listaTodos();
 	}
 	
+	@Transacional
 	public void excluir(Autor autor) {
 		dao.remove(autor);
 		FacesContext.getCurrentInstance().addMessage("frmAutor", new FacesMessage("Autor excluído com sucesso!"));

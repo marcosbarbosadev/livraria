@@ -19,6 +19,7 @@ import br.com.caelum.livraria.dao.LivroDao;
 import br.com.caelum.livraria.modelo.Autor;
 import br.com.caelum.livraria.modelo.Livro;
 import br.com.caelum.livraria.modelo.LivroDataModal;
+import br.com.caelum.livraria.tx.Transacional;
 
 @Named
 @ViewScoped
@@ -52,6 +53,7 @@ public class LivroBean implements Serializable {
 		livro = livroDao.buscaPorId(livroId);
 	}
 	
+	@Transacional
 	public void gravar() {
 
 		if (livro.getAutores().isEmpty()) {
@@ -104,6 +106,7 @@ public class LivroBean implements Serializable {
 		return "autor?faces-redirect=true";
 	}
 	
+	@Transacional
 	public void excluir(Livro livro) {
 		livroDao.remove(livro);
 		FacesContext.getCurrentInstance().addMessage("frmLivro", new FacesMessage("Livro excluído com sucesso!"));
