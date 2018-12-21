@@ -6,16 +6,17 @@ import java.util.Map;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import br.com.caelum.livraria.dao.DAO;
+import br.com.caelum.livraria.dao.LivroDao;
 
 public class LivroDataModal extends LazyDataModel<Livro> {
 
 	private static final long serialVersionUID = 1L;
+
+	private LivroDao livroDao;
 	
-	private DAO dao = new DAO(Livro.class);
-	
-	public LivroDataModal() {
-		super.setRowCount(dao.quantidadeDeElementos());
+	public LivroDataModal(LivroDao livroDao) {
+		this.livroDao = livroDao;
+		super.setRowCount(livroDao.quantidadeDeElementos());
 	}
 	
 	@Override
@@ -27,14 +28,14 @@ public class LivroDataModal extends LazyDataModel<Livro> {
 		
 		if(titulo != null || genero != null) {
 			if(titulo != null) {
-				listaPaginada = dao.listaTodosPaginada(inicio, quantidade, "titulo", titulo);
+				listaPaginada = livroDao.listaTodosPaginada(inicio, quantidade, "titulo", titulo);
 			}
 			
 			if(genero != null) {
-				listaPaginada = dao.listaTodosPaginada(inicio, quantidade, "genero", genero);
+				listaPaginada = livroDao.listaTodosPaginada(inicio, quantidade, "genero", genero);
 			}
 		} else {
-			listaPaginada = dao.listaTodosPaginada(inicio, quantidade, "titulo", null);
+			listaPaginada = livroDao.listaTodosPaginada(inicio, quantidade, "titulo", null);
 		}
 		
 		
