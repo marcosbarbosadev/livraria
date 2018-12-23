@@ -38,7 +38,6 @@ public class LivroDao implements Serializable {
 
 	@LogLivraria
 	public List<Livro> listaTodos() {
-		System.out.println("Não funcionou :(");
 		return dao.listaTodos();
 	}
 

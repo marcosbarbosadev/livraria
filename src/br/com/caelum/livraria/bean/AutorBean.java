@@ -23,6 +23,9 @@ public class AutorBean implements Serializable {
 	
 	@Inject
 	private AutorDao dao;
+	
+	@Inject
+	private FacesContext context;
 
 	public Autor getAutor() {
 		return autor;
@@ -52,6 +55,6 @@ public class AutorBean implements Serializable {
 	@Transacional
 	public void excluir(Autor autor) {
 		dao.remove(autor);
-		FacesContext.getCurrentInstance().addMessage("frmAutor", new FacesMessage("Autor excluído com sucesso!"));
+		context.getCurrentInstance().addMessage("frmAutor", new FacesMessage("Autor excluído com sucesso!"));
 	}
 }

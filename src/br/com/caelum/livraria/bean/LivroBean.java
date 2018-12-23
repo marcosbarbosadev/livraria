@@ -40,6 +40,9 @@ public class LivroBean implements Serializable {
 	@Inject
 	private AutorDao autorDao;
 	
+	@Inject
+	private FacesContext context;
+	
 	@PostConstruct
 	void init() {
 		livroDataModal = new LivroDataModal(livroDao);
@@ -57,7 +60,7 @@ public class LivroBean implements Serializable {
 	public void gravar() {
 
 		if (livro.getAutores().isEmpty()) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Livro deve ter pelo menos um Autor."));
+			context.getCurrentInstance().addMessage(null, new FacesMessage("Livro deve ter pelo menos um Autor."));
 			return;
 		}
 
@@ -67,7 +70,7 @@ public class LivroBean implements Serializable {
 			livroDao.atualiza(this.livro);
 		}
 		
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Livro salvo com sucesso."));
+		context.getCurrentInstance().addMessage(null, new FacesMessage("Livro salvo com sucesso."));
 		carregarLivros();
 		this.livro = new Livro();
 	}
@@ -109,7 +112,7 @@ public class LivroBean implements Serializable {
 	@Transacional
 	public void excluir(Livro livro) {
 		livroDao.remove(livro);
-		FacesContext.getCurrentInstance().addMessage("frmLivro", new FacesMessage("Livro excluído com sucesso!"));
+		context.getCurrentInstance().addMessage("frmLivro", new FacesMessage("Livro excluído com sucesso!"));
 		carregarLivros();
 	}
 	
