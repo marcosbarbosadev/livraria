@@ -109,6 +109,10 @@ public class LivroBean implements Serializable {
 		return "autor?faces-redirect=true";
 	}
 	
+	public void editar(Livro livro) {
+		this.livro = livroDao.buscaPorId(livro.getId());
+	}
+	
 	@Transacional
 	public void excluir(Livro livro) {
 		livroDao.remove(livro);

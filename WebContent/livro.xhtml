@@ -118,9 +118,8 @@
 					</h:outputText>
 				</p:column>
 				<p:column headerText="Ações">
-					<p:commandLink styleClass="ui-icon ui-icon-pencil" process="@this" update=":frmLivro" style="float: left;">
-						<f:setPropertyActionListener value="#{livro}" target="#{livroBean.livro}" />
-					</p:commandLink>
+					<p:commandLink styleClass="ui-icon ui-icon-pencil" process="@this" actionListener="#{livroBean.editar(livro)}" 
+						update=":frmLivro" style="float: left;" />
 					<p:commandLink styleClass="ui-icon ui-icon-trash" action="#{livroBean.excluir(livro)}" 
 						process="@this" update=":frmListaLivros:listagemLivros" style="float: left;" />
 				
