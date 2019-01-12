@@ -9,23 +9,24 @@ import javax.persistence.EntityManager;
 
 import br.com.caelum.livraria.modelo.Autor;
 import br.com.caelum.livraria.modelo.Livro;
+import br.com.caelum.livraria.modelo.Usuario;
 
 public class PopulaBanco {
 
 	public static void main(String[] args) {
 
-		EntityManager em = new JPAUtil().getEntityManager();
+		EntityManager manager = new JPAUtil().getEntityManager();
 
-		em.getTransaction().begin();
+		manager.getTransaction().begin();
 
 		Autor assis = geraAutor("Machado de Assis");
-		em.persist(assis);
+		manager.persist(assis);
 
 		Autor amado = geraAutor("Jorge Amado");
-		em.persist(amado);
+		manager.persist(amado);
 
 		Autor coelho = geraAutor("Paulo Coelho");
-		em.persist(coelho);
+		manager.persist(coelho);
 
 		Livro casmurro = geraLivro("978-8-52-504464-8", "Dom Casmurro",
 				"10/01/1899", 24.90, assis);
@@ -34,9 +35,9 @@ public class PopulaBanco {
 		Livro quincas = geraLivro("978-8-50-804084-1", "Quincas Borba",
 				"01/01/1891", 16.90, assis);
 
-		em.persist(casmurro);
-		em.persist(memorias);
-		em.persist(quincas);
+		manager.persist(casmurro);
+		manager.persist(memorias);
+		manager.persist(quincas);
 
 		Livro alquemista = geraLivro("978-8-57-542758-3", "O Alquimista",
 				"01/01/1988", 19.90, coelho);
@@ -47,21 +48,26 @@ public class PopulaBanco {
 		Livro maao = geraLivro("978-8-51-892238-9", "O Diario de um Mago",
 				"01/01/1987", 9.90, coelho);
 
-		em.persist(alquemista);
-		em.persist(brida);
-		em.persist(valkirias);
-		em.persist(maao);
+		manager.persist(alquemista);
+		manager.persist(brida);
+		manager.persist(valkirias);
+		manager.persist(maao);
 
 		Livro capitaes = geraLivro("978-8-50-831169-1", "Capitaes da Areia",
 				"01/01/1937", 6.90, amado);
 		Livro flor = geraLivro("978-8-53-592569-9",
 				"Dona Flor e Seus Dois Maridos", "01/01/1966", 18.90, amado);
 
-		em.persist(capitaes);
-		em.persist(flor);
+		manager.persist(capitaes);
+		manager.persist(flor);
+		
+		Usuario usuario = new Usuario();
+		usuario.setEmail("barbosa.mg@gmail.com");
+		usuario.setSenha("dev");
+		manager.persist(usuario);
 
-		em.getTransaction().commit();
-		em.close();
+		manager.getTransaction().commit();
+		manager.close();
 
 	}
 
