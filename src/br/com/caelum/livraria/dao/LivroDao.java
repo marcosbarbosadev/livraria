@@ -2,6 +2,7 @@ package br.com.caelum.livraria.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -52,13 +53,16 @@ public class LivroDao implements Serializable {
 	}
 
 	@LogLivraria
-	public List<Livro> listaTodosPaginada(int firstResult, int maxResults, String campoSort, SortOrder ordemSort) {
-		return dao.listaTodosPaginada(firstResult, maxResults, campoSort, ordemSort);
+	public List<Livro> listaTodosPaginada(int firstResult, int maxResults, String campoSort, SortOrder ordemSort, Map<String, Object> filtros) {
+		return dao.listaTodosPaginada(firstResult, maxResults, campoSort, ordemSort, filtros);
 	}
 
 	public int quantidadeDeElementos() {
 		return dao.quantidadeDeElementos();
 	}
 	
+	public int quantidadeDeElementos(Map<String, Object> filtros) {
+		return dao.quantidadeDeElementos(filtros);
+	}
 	
 }

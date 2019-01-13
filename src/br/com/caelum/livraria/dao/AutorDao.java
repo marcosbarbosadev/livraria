@@ -2,10 +2,13 @@ package br.com.caelum.livraria.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+
+import org.primefaces.model.SortOrder;
 
 import br.com.caelum.livraria.modelo.Autor;
 
@@ -48,8 +51,8 @@ public class AutorDao implements Serializable {
 		return dao.contaTodos();
 	}
 
-	public List<Autor> listaTodosPaginada(int firstResult, int maxResults, String coluna, String valor) {
-		return dao.listaTodosPaginada(firstResult, maxResults, coluna, valor);
+	public List<Autor> listaTodosPaginada(int firstResult, int maxResults, String colunaSort, SortOrder ordemSort, Map<String, Object> filtros) {
+		return dao.listaTodosPaginada(firstResult, maxResults, colunaSort, ordemSort, filtros);
 	}
 
 	public int quantidadeDeElementos() {

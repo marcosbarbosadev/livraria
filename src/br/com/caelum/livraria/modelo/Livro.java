@@ -28,7 +28,7 @@ public class Livro implements Serializable {
 
 	private String titulo;
 	private String isbn;
-	private double preco;
+	private Double preco;
 	
 	@Enumerated(EnumType.STRING)
 	private GeneroLivro genero;
@@ -75,11 +75,11 @@ public class Livro implements Serializable {
 		this.isbn = isbn;
 	}
 
-	public double getPreco() {
+	public Double getPreco() {
 		return preco;
 	}
 
-	public void setPreco(double preco) {
+	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
 

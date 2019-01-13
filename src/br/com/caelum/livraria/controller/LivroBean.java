@@ -1,9 +1,12 @@
 package br.com.caelum.livraria.controller;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -17,6 +20,7 @@ import javax.inject.Named;
 
 import br.com.caelum.livraria.dao.AutorDao;
 import br.com.caelum.livraria.dao.LivroDao;
+import br.com.caelum.livraria.model.dto.FiltrosLivroDTO;
 import br.com.caelum.livraria.modelo.Autor;
 import br.com.caelum.livraria.modelo.GeneroLivro;
 import br.com.caelum.livraria.modelo.Livro;
@@ -34,6 +38,8 @@ public class LivroBean implements Serializable {
 	private Livro livro = new Livro();
 	private List<Livro> livros;
 	private LivroDataModal livroDataModal;
+	
+	private FiltrosLivroDTO filtrosPesquisa = new FiltrosLivroDTO();
 
 	@Inject
 	private LivroDao livroDao;
@@ -74,6 +80,40 @@ public class LivroBean implements Serializable {
 		context.getCurrentInstance().addMessage(null, new FacesMessage("Livro salvo com sucesso."));
 		carregarLivros();
 		this.livro = new Livro();
+	}
+	
+	public void pesquisar() {
+		
+		Map<String, Object> filtros = new HashMap<>();
+		
+		if(filtrosPesquisa.getTitulo() != null && !filtrosPesquisa.getTitulo().isEmpty()) {
+			filtros.put("titulo", filtrosPesquisa.getTitulo());
+		}
+		
+		if(filtrosPesquisa.getGenero() != GeneroLivro.SELECIONE && filtrosPesquisa.getGenero() != null) {
+			filtros.put("genero", filtrosPesquisa.getGenero());
+		}
+		
+		if(filtrosPesquisa.getIsbn() != null && !filtrosPesquisa.getIsbn().isEmpty()) {
+			filtros.put("isbn", filtrosPesquisa.getIsbn());
+		}
+
+		if(filtrosPesquisa.getLancamentoInicio() != null && filtrosPesquisa.getLancamentoFim() != null) {
+			filtros.put("lancamentoInicio", filtrosPesquisa.getLancamentoInicio());
+			filtros.put("lancamentoFim", filtrosPesquisa.getLancamentoFim());
+		}
+		
+		if(filtrosPesquisa.getPreco() != null) {
+			filtros.put("preco", filtrosPesquisa.getPreco());
+		}
+		
+		livroDataModal.setFiltrosPesquisa(filtros);
+		
+	}
+	
+	public void limpar() {
+		filtrosPesquisa = new FiltrosLivroDTO();
+		pesquisar();
 	}
 	
 	public void gravarAutor() {
@@ -191,6 +231,14 @@ public class LivroBean implements Serializable {
 	
 	public void setLivroDataModal(LivroDataModal livroDataModal) {
 		this.livroDataModal = livroDataModal;
+	}
+	
+	public FiltrosLivroDTO getFiltrosPesquisa() {
+		return filtrosPesquisa;
+	}
+	
+	public void setFiltrosPesquisa(FiltrosLivroDTO filtrosPesquisa) {
+		this.filtrosPesquisa = filtrosPesquisa;
 	}
 	
 	public List<SelectItem> getGeneros() {

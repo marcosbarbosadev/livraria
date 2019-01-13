@@ -35,7 +35,8 @@
 					<p:message for="isbn" id="messageISBN" />
 	
 					<p:outputLabel value="Preço:" for="preco" />
-					<p:inputText id="preco" value="#{livroBean.livro.preco}" validatorMessage="O preço deve ser entre 1 e 1.000">
+					<p:inputText id="preco" value="#{livroBean.livro.preco}" converter="javax.faces.Double" 
+						validatorMessage="O preço deve ser entre 1 e 1.000">
 						<f:validateDoubleRange minimum="1.00" maximum="1000.00" />
 					</p:inputText>
 					<p:message for="preco" id="messagePreco" />
@@ -47,7 +48,6 @@
 						
 					<p:outputLabel value="Gênero:" for="genero" />                            
 					<p:selectOneMenu value="#{livroBean.livro.genero}" id="genero" converter="generoConverter">
-					    <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
 					    <f:selectItems value="#{livroBean.generos}" />
 					</p:selectOneMenu>
 					<p:message for="genero" id="messageGenero" />		
@@ -88,41 +88,45 @@
 		
 		<p:accordionPanel activeIndex="-1">
         	<p:tab title="Filtrar">
-        		<p:panelGrid columns="2">
-		        	<p:panelGrid columns="2">
-		        		<p:outputLabel value="Título" for="titulo-filtro" />
-		        		<p:inputText id="titulo-filtro" />
+        		<h:form>
+	        		<p:panelGrid columns="2">
+			        	<p:panelGrid columns="2">
+			        		<p:outputLabel value="Título" for="titulo-filtro" />
+			        		<p:inputText id="titulo-filtro" value="#{livroBean.filtrosPesquisa.titulo}" />
+		
+			        		<p:outputLabel value="Gênero" for="genero-filtro" />
+			        		<p:selectOneMenu id="genero-filtro" value="#{livroBean.filtrosPesquisa.genero}" converter="generoConverter">
+			        			<f:selectItems value="#{livroBean.generos}" />
+			        		</p:selectOneMenu>
+		
+			        		<p:outputLabel value="ISBN" for="isbn-filtro" />
+			        		<p:inputText id="isbn-filtro" value="#{livroBean.filtrosPesquisa.isbn}" />
+			        	</p:panelGrid>
+			        	<p:panelGrid columns="3">
+			        		<p:outputLabel value="Lançamento" />
+							<p:calendar id="periodo-inicio-filtro" mask="true" value="#{livroBean.filtrosPesquisa.lancamentoInicio}" 
+								timeZone="America/Sao_Paulo" pattern="dd/MM/yyyy" />
+							<p:calendar id="periodo-fim-filtro" mask="true" value="#{livroBean.filtrosPesquisa.lancamentoFim}"
+								timeZone="America/Sao_Paulo" pattern="dd/MM/yyyy" />
 	
-		        		<p:outputLabel value="Gênero" for="genero-filtro" />
-		        		<p:selectOneMenu id="genero-filtro">
-		        			<f:selectItem itemLabel="Selecione" />
-		        			<f:selectItem itemValue="1" itemLabel="Opção Um" />
-		        		</p:selectOneMenu>
-	
-		        		<p:outputLabel value="ISBN" for="isbn-filtro" />
-		        		<p:inputText id="isbn-filtro" />
-		        	</p:panelGrid>
-		        	<p:panelGrid columns="3">
-		        		<p:outputLabel value="Lançamento" />
-						<p:calendar id="periodo-inicio-filtro" mask="true" 
-							timeZone="America/Sao_Paulo" />
-						<p:calendar id="periodo-fim-filtro" mask="true" 
-							timeZone="America/Sao_Paulo" />
-
-		        		<p:outputLabel value="Preço" for="preco-filtro" />
-		        		<p:inputText id="preco-filtro" />
-		        	</p:panelGrid>
-		        	
-		        	<p:commandButton value="Pesquisar" />
-		        	<h:outputLabel />
-		        	
-        		</p:panelGrid>
+			        		<p:outputLabel value="Preço" for="preco-filtro" />
+			        		<p:inputText id="preco-filtro" value="#{livroBean.filtrosPesquisa.preco}" converter="javax.faces.Double" />
+			        	</p:panelGrid>
+			        	
+			        	<h:column>
+				        	<p:commandButton value="Pesquisar" action="#{livroBean.pesquisar()}" process="@form" update="frmListaLivros" />
+				        	<p:commandButton value="Limpar" action="#{livroBean.limpar()}" process="@form" update="@form frmListaLivros" />
+			        	</h:column>
+			        	<h:outputLabel />
+			        	
+	        		</p:panelGrid>
+        		</h:form>
         	</p:tab>
         </p:accordionPanel>
 		
 		<h:form id="frmListaLivros">
 			<p:dataTable value="#{livroBean.livroDataModal}" var="livro" id="listagemLivros" rows="5" 
-				paginator="true" lazy="true" widgetVar="listagemLivros">
+				paginator="true" lazy="true" widgetVar="listagemLivros" emptyMessage="A pesquisa não retornou resultados">
 				
 				<p:column headerText="Título" sortBy="#{livro.titulo}">
 					<h:outputText value="#{livro.titulo}" />
@@ -136,7 +140,9 @@
 					<h:outputText value="#{livro.isbn}" />
 				</p:column>
 				<p:column headerText="Preço" sortBy="#{livro.preco}">
-					<h:outputText value="#{livro.preco}" />
+					<h:outputText value="#{livro.preco}">
+						<f:convertNumber type="number" locale="pt_BR" groupingUsed="true" minFractionDigits="2" pattern="#0.00" />
+					</h:outputText>
 				</p:column>
 				<p:column headerText="Data de Lançamento" sortBy="#{livro.dataLancamento.time}">
 					<h:outputText value="#{livro.dataLancamento.time}">
