@@ -1,7 +1,7 @@
-package br.com.caelum.livraria.bean;
+package br.com.caelum.livraria.controller;
 
 import java.io.Serializable;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -17,6 +18,7 @@ import javax.inject.Named;
 import br.com.caelum.livraria.dao.AutorDao;
 import br.com.caelum.livraria.dao.LivroDao;
 import br.com.caelum.livraria.modelo.Autor;
+import br.com.caelum.livraria.modelo.GeneroLivro;
 import br.com.caelum.livraria.modelo.Livro;
 import br.com.caelum.livraria.modelo.LivroDataModal;
 import br.com.caelum.livraria.tx.Transacional;
@@ -32,7 +34,7 @@ public class LivroBean implements Serializable {
 	private Livro livro = new Livro();
 	private List<Livro> livros;
 	private LivroDataModal livroDataModal;
-	private List<String> generos = Arrays.asList("Romance", "Drama", "Ação");
+	private GeneroLivro[] generos = GeneroLivro.values();
 
 	@Inject
 	private LivroDao livroDao;
@@ -96,6 +98,9 @@ public class LivroBean implements Serializable {
 		livros = livroDao.listaTodos();
 	}
 	
+	/**
+	 * Para exemplificar o uso de validator
+	 */
 	public void comecaComDigitoUm(FacesContext fc, UIComponent component, Object value) throws ValidatorException {
 		String valor = value.toString();
 		
@@ -189,7 +194,14 @@ public class LivroBean implements Serializable {
 		this.livroDataModal = livroDataModal;
 	}
 	
-	public List<String> getGeneros() {
+	public List<SelectItem> getGeneros() {
+		
+		List<SelectItem> generos = new ArrayList<>();
+		
+		for(GeneroLivro genero : GeneroLivro.values()) {
+			generos.add(new SelectItem(genero, genero.getDescricao()));
+		}
+		
 		return generos;
 	}
 	

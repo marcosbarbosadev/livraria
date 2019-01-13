@@ -6,13 +6,18 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
+@Table(name = "livros", schema = "livraria")
 public class Livro implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -24,12 +29,15 @@ public class Livro implements Serializable {
 	private String titulo;
 	private String isbn;
 	private double preco;
-	private String genero;
+	
+	@Enumerated(EnumType.STRING)
+	private GeneroLivro genero;
 	
 	@Temporal(TemporalType.DATE)
 	private Calendar dataLancamento = Calendar.getInstance();
 
 	@ManyToMany
+	@JoinTable(schema = "livraria")
 	private List<Autor> autores = new ArrayList<Autor>();
 
 	public Livro() {}
@@ -75,11 +83,11 @@ public class Livro implements Serializable {
 		this.preco = preco;
 	}
 
-	public String getGenero() {
+	public GeneroLivro getGenero() {
 		return genero;
 	}
 	
-	public void setGenero(String genero) {
+	public void setGenero(GeneroLivro genero) {
 		this.genero = genero;
 	}
 	

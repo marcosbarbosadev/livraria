@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -53,11 +54,12 @@ public class DAO<T> implements Serializable {
 	}
 
 	public List<T> listaTodosPaginada(int firstResult, int maxResults, String coluna, String valor) {
-		CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<T> query = builder.createQuery(classe);
 		Root<T> root = query.from(classe);
 
 		if(valor != null) {
-			query = query.where(em.getCriteriaBuilder().like(root.<String>get(coluna), "%" + valor + "%"));
+			query = query.where(em.getCriteriaBuilder().like(builder.lower(root.<String>get(coluna)), "%" + valor.toLowerCase() + "%"));
 		}
 
 		List<T> lista = em.createQuery(query).setFirstResult(firstResult)

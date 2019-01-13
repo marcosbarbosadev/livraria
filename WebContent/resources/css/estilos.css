@@ -1,0 +1,7 @@
+.ui-panelgrid tr, .ui-panelgrid td {
+	border: none !important;
+}
+
+.ui-panelgrid td {
+	vertical-align: top;
+}

@@ -29,7 +29,7 @@
 					<p:message for="titulo" id="messageTitulo" />
 	
 					<p:outputLabel value="ISBN:" for="isbn" />
-					<p:inputMask id="isbn" value="#{livroBean.livro.isbn}" validator="#{livroBean.comecaComDigitoUm}" mask="999-9-99-999999-9">
+					<p:inputMask id="isbn" value="#{livroBean.livro.isbn}" mask="999-9-99-999999-9">
 						<f:ajax event="blur" render="messages" />
 					</p:inputMask>
 					<p:message for="isbn" id="messageISBN" />
@@ -46,9 +46,9 @@
 					<p:message for="dataLancamento" id="messageDataLancamento" />
 						
 					<p:outputLabel value="Gênero:" for="genero" />                            
-					<p:selectOneMenu value="#{livroBean.livro.genero}" id="genero">
+					<p:selectOneMenu value="#{livroBean.livro.genero}" id="genero" converter="generoConverter">
 					    <f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-					    <f:selectItems value="#{livroBean.generos}" /> 
+					    <f:selectItems value="#{livroBean.generos}" />
 					</p:selectOneMenu>
 					<p:message for="genero" id="messageGenero" />		
 	
@@ -85,6 +85,41 @@
 	
 		</h:form>
 		<br /><br />
+		
+		<p:accordionPanel activeIndex="-1">
+        	<p:tab title="Filtrar">
+        		<p:panelGrid columns="2">
+		        	<p:panelGrid columns="2">
+		        		<p:outputLabel value="Título" for="titulo-filtro" />
+		        		<p:inputText id="titulo-filtro" />
+	
+		        		<p:outputLabel value="Gênero" for="genero-filtro" />
+		        		<p:selectOneMenu id="genero-filtro">
+		        			<f:selectItem itemLabel="Selecione" />
+		        			<f:selectItem itemValue="1" itemLabel="Opção Um" />
+		        		</p:selectOneMenu>
+	
+		        		<p:outputLabel value="ISBN" for="isbn-filtro" />
+		        		<p:inputText id="isbn-filtro" />
+		        	</p:panelGrid>
+		        	<p:panelGrid columns="3">
+		        		<p:outputLabel value="Lançamento" />
+						<p:calendar id="periodo-inicio-filtro" mask="true" 
+							timeZone="America/Sao_Paulo" />
+						<p:calendar id="periodo-fim-filtro" mask="true" 
+							timeZone="America/Sao_Paulo" />
+
+		        		<p:outputLabel value="Preço" for="preco-filtro" />
+		        		<p:inputText id="preco-filtro" />
+		        	</p:panelGrid>
+		        	
+		        	<p:commandButton value="Pesquisar" />
+		        	<h:outputLabel />
+		        	
+        		</p:panelGrid>
+        	</p:tab>
+        </p:accordionPanel>
+		
 		<h:form id="frmListaLivros">
 			<p:dataTable value="#{livroBean.livroDataModal}" var="livro" id="listagemLivros" rows="5" 
 				paginator="true" lazy="true" widgetVar="listagemLivros">
@@ -102,7 +137,7 @@
 				            <f:selectItems value="#{livroBean.generos}" />
 				        </p:selectOneMenu>
 					</f:facet>
-				    <h:outputText value="#{livro.genero}" />
+				    <h:outputText value="#{livro.genero.descricao}" />
 				</p:column>					
 				
 				<p:column headerText="ISBN" sortBy="#{livro.isbn}" filterBy="#{livro.isbn}" filterMatchMode="contains">
