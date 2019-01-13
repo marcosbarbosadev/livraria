@@ -21,25 +21,7 @@ public class LivroDataModal extends LazyDataModel<Livro> {
 	
 	@Override
 	public List<Livro> load(int inicio, int quantidade, String campoOrdenacao, SortOrder sentidoOrdenacao, Map<String, Object> filtros) {
-		String titulo = (String) filtros.get("titulo");
-		String genero = (String) filtros.get("genero");
-		
-		List<Livro> listaPaginada = null;
-		
-		if(titulo != null || genero != null) {
-			if(titulo != null) {
-				listaPaginada = livroDao.listaTodosPaginada(inicio, quantidade, "titulo", titulo);
-			}
-			
-			if(genero != null) {
-				listaPaginada = livroDao.listaTodosPaginada(inicio, quantidade, "genero", genero);
-			}
-		} else {
-			listaPaginada = livroDao.listaTodosPaginada(inicio, quantidade, "titulo", null);
-		}
-		
-		
-		return listaPaginada;
+		return livroDao.listaTodosPaginada(inicio, quantidade, campoOrdenacao, sentidoOrdenacao);
 	}
 
 }

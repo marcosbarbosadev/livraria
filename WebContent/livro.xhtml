@@ -123,31 +123,22 @@
 		<h:form id="frmListaLivros">
 			<p:dataTable value="#{livroBean.livroDataModal}" var="livro" id="listagemLivros" rows="5" 
 				paginator="true" lazy="true" widgetVar="listagemLivros">
-				<f:facet name="header">Livros</f:facet>
 				
-				<!-- MatchModes: startsWith, endsWidth, contains, exact, equals, lte (menos ou igual) e gte (maior ou igual) -->
-				<p:column headerText="Título" sortBy="#{livro.titulo}" filterBy="#{livro.titulo}" filterMatchMode="contains">
+				<p:column headerText="Título" sortBy="#{livro.titulo}">
 					<h:outputText value="#{livro.titulo}" />
 				</p:column>
 				
-				<p:column headerText="Gênero" sortBy="#{livro.genero}" filterBy="#{livro.genero}" filterMatchMode="startsWith">
-					<f:facet name="filter">
-				        <p:selectOneMenu onchange="PF('listagemLivros').filter()">
-				            <f:selectItem itemLabel="Selecione..." itemValue="#{null}" noSelectionOption="true" />
-				            <f:selectItems value="#{livroBean.generos}" />
-				        </p:selectOneMenu>
-					</f:facet>
+				<p:column headerText="Gênero" sortBy="#{livro.genero}">
 				    <h:outputText value="#{livro.genero.descricao}" />
 				</p:column>					
 				
-				<p:column headerText="ISBN" sortBy="#{livro.isbn}" filterBy="#{livro.isbn}" filterMatchMode="contains">
+				<p:column headerText="ISBN" sortBy="#{livro.isbn}">
 					<h:outputText value="#{livro.isbn}" />
 				</p:column>
-				<p:column headerText="Preço" sortBy="#{livro.preco}" filterBy="#{livro.preco}" filterFunction="#{livroBean.precoEhMenor}">
+				<p:column headerText="Preço" sortBy="#{livro.preco}">
 					<h:outputText value="#{livro.preco}" />
 				</p:column>
-				<p:column headerText="Data de Lançamento" sortBy="#{livro.dataLancamento.time}" filterBy="#{livro.dataLancamento.time}"
-					filterMatchMode="contains">
+				<p:column headerText="Data de Lançamento" sortBy="#{livro.dataLancamento.time}">
 					<h:outputText value="#{livro.dataLancamento.time}">
 						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" />
 					</h:outputText>

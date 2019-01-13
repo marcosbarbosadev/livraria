@@ -7,6 +7,8 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import org.primefaces.model.SortOrder;
+
 import br.com.caelum.livraria.log.LogLivraria;
 import br.com.caelum.livraria.modelo.Livro;
 
@@ -50,8 +52,8 @@ public class LivroDao implements Serializable {
 	}
 
 	@LogLivraria
-	public List<Livro> listaTodosPaginada(int firstResult, int maxResults, String coluna, String valor) {
-		return dao.listaTodosPaginada(firstResult, maxResults, coluna, valor);
+	public List<Livro> listaTodosPaginada(int firstResult, int maxResults, String campoSort, SortOrder ordemSort) {
+		return dao.listaTodosPaginada(firstResult, maxResults, campoSort, ordemSort);
 	}
 
 	public int quantidadeDeElementos() {

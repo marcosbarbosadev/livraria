@@ -6,7 +6,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
+
+import org.primefaces.model.SortOrder;
 
 public class DAO<T> implements Serializable {
 
@@ -53,15 +56,28 @@ public class DAO<T> implements Serializable {
 		return (int) result;
 	}
 
-	public List<T> listaTodosPaginada(int firstResult, int maxResults, String coluna, String valor) {
+	public List<T> listaTodosPaginada(int firstResult, int maxResults, String colunaSort, SortOrder ordemSort) {
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<T> query = builder.createQuery(classe);
 		Root<T> root = query.from(classe);
 
-		if(valor != null) {
-			query = query.where(em.getCriteriaBuilder().like(builder.lower(root.<String>get(coluna)), "%" + valor.toLowerCase() + "%"));
-		}
+//		if(valor != null) {
+//			query = query.where(em.getCriteriaBuilder().like(builder.lower(root.<String>get(coluna)), "%" + valor.toLowerCase() + "%"));
+//		}
 
+		if(colunaSort != null && ordemSort != null) {
+			
+			Order order = null;
+			
+			if(ordemSort == SortOrder.ASCENDING) {
+				order = builder.asc(root.get(colunaSort));
+			} else {
+				order = builder.desc(root.get(colunaSort));
+			}
+			
+			query.orderBy(order);
+		}
+		
 		List<T> lista = em.createQuery(query).setFirstResult(firstResult)
 				.setMaxResults(maxResults).getResultList();
 

@@ -34,7 +34,6 @@ public class LivroBean implements Serializable {
 	private Livro livro = new Livro();
 	private List<Livro> livros;
 	private LivroDataModal livroDataModal;
-	private GeneroLivro[] generos = GeneroLivro.values();
 
 	@Inject
 	private LivroDao livroDao;
@@ -203,6 +202,10 @@ public class LivroBean implements Serializable {
 		}
 		
 		return generos;
+	}
+	
+	public List<Livro> getLivros() {
+		return livros;
 	}
 	
 }
